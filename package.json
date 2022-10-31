@@ -4,7 +4,7 @@
   "description": "hello paskage.json",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app"
+    "start": "nodemon app || node app"
   },
   "repository": {
     "type": "git",
