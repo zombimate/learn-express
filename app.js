@@ -1,6 +1,8 @@
 /* learn-express/app.js */
-const express = require("express");
+const express = require('express');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const session = require('express-session')
 const dotenv = require('dotenv');
 const path = require('path');
 
@@ -9,7 +11,19 @@ const app = express();
 const port = process.env.PORT || 8888;
 
 app.use(morgan('dev'));
-메ㅔㅕㄴㄷ('/', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false}));
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.COOKIE_SECRET,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+  name: 'session-cookie',
+}));
 
 /* 전처리 미들웨어 */
 app.use((req, res, next) => {
